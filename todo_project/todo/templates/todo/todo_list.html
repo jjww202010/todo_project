@@ -1,0 +1,55 @@
+<!-- todo/templates/todo/todo_list.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do List</title>
+    <style>
+        /* CSS 스타일링은 이곳에 추가할 수 있습니다. */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>To-do List</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">추가</button>
+    </form>
+    <ul>
+        {% for todo in todos %}
+            <li>
+                {{ todo.title }}
+                <form method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" formaction="{% url 'delete_todo' todo.id %}">삭제</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
